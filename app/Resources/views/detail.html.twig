@@ -12,20 +12,18 @@
 
 {% block body %} 
   
-   <div >
+<div >
+	<div id="simplediv" class="col-md-6 offset-md-3">
+	 <h3 class="mb-2">User details</h3>
+	 <div class="mb-2">
+	 	<div><b>Email Address: </b></div>
+	 	<div> {{ user.email }} </div>
+	 </div>
 
-   		<div id="simplediv" class="col-md-6 offset-md-3">
-   			 <h3 class="mb-2">User details</h3>
-   			 <div class="mb-2">
-   			 	<div><b>Email Address: </b></div>
-   			 	<div> {{ user.email }} </div>
-   			 </div>
-
-   			 <div>
-   			 	<div><b>Password: </b></div>
-   			 	<div> {{ user.password }} </div>
-   			 </div>
-   		</div>
-      
-   </div> 
+	 <div>
+	 	<div><b>Password: </b></div>
+	 	<div> {{ user.password }} </div>
+	 </div>
+	</div>
+</div> 
 {% endblock %}     
