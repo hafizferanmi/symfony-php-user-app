@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %} 
+
+{% block stylesheets %}
+	<style type="text/css">
+	#simplediv{
+		background: whitesmoke;
+		margin-top: 50px;
+		padding: 10px;
+	}
+	</style>
+{% endblock %} 
+
+{% block body %} 
+  
+   <div >
+
+   		<div id="simplediv" class="col-md-6 offset-md-3">
+   			 <h3 class="mb-2">User details</h3>
+   			 <div class="mb-2">
+   			 	<div><b>Email Address: </b></div>
+   			 	<div> {{ user.email }} </div>
+   			 </div>
+
+   			 <div>
+   			 	<div><b>Password: </b></div>
+   			 	<div> {{ user.password }} </div>
+   			 </div>
+   		</div>
+      
+   </div> 
+{% endblock %}     

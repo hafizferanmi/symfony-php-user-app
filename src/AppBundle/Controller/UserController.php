@@ -56,6 +56,27 @@ class UserController extends Controller {
 	}
 
 	/** 
+      * @Route("/user/{userId}", name="user_desc") 
+    */ 
+	public function showAction($userId){
+
+	    $user = $this->getDoctrine()
+	        ->getRepository(User::class)
+	        ->find($userId);
+
+	    if (empty($user)) {
+            $this->addFlash('error', 'User not found');
+            return $this->redirectToRoute('users');
+        }
+        
+        return $this->render('detail.html.twig', array(
+            'user' => $user
+        ));
+
+	    
+	}
+
+	/** 
       * @Route("/success", name="success") 
     */ 
 	public function success(){
