@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %} 
+
+{% block stylesheets %}
+	<style type="text/css">
+	#simpleform{
+		background: whitesmoke;
+		margin-top: 50px;
+		padding: 10px;
+	}
+	</style>
+{% endblock %} 
+
+{% block body %} 
+  
+   <div >
+
+   		<div id="simpleform" class="col-md-4 offset-md-4">
+   			 <h3 class="mb-2">User details</h3> 
+   			{{ form_start(form) }} 
+		    {{ form_widget(form) }} 
+		    {{ form_end(form) }} 
+   		</div>
+      
+   </div> 
+{% endblock %}     

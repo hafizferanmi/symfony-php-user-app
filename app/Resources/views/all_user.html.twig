@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %} 
+{% block stylesheets %} 
+	<style>
+	th, td {
+	  padding: 10px;
+	}
+	th {
+	  text-align: left;
+	}
+	</style>
+
+{% endblock %}  
+
+
+{% block body %} 
+<div class="col-md-3 offset-3">
+<h1>All Users</h1>
+<a class="btn btn-primary mb-3" href="/user/add">Create New</a>  
+<br>
+{% if users is not empty %}
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>S/N</th>
+      <th>EMAIL</th>
+      <th>PASSWORD</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+  <tr>
+    <td>{{ user.id }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.password }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+{% else %}
+  <p>No article found.</p>
+{% endif %}
+
+<br/>
+
+</div>
+
+
+
+{% endblock %} 
