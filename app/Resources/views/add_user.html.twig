@@ -15,19 +15,7 @@
    <div >
 
    		<div id="simpleform" class="col-md-4 offset-md-4">
-   			 <h3 class="mb-2">Enter User detail</h3> 
-
-   			{% if not form.vars.valid %}
-			<ul class="alert alert-danger">
-			    {# Loop through every form item #}
-			    {% for child in form.children %}
-			        {# Display the errors of the form item #}
-			        {%for error in child.vars.errors%}
-			            <li>{{error.message}}</li>
-			        {%endfor%}
-			    {%endfor%}
-			</ul>
-			{%endif%}
+   			 <h3 class="mb-2">Enter User details</h3> 
 
 
 			{{ form_start(form) }}

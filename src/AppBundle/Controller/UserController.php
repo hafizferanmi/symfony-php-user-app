@@ -46,7 +46,7 @@ class UserController extends Controller {
 	        $entityManager->persist($user);
 	        $entityManager->flush();
 
-	        return $this->redirectToRoute('success');
+	        return $this->redirect('/user/' . $user->getId());
 	    }
 
 	    return $this->render('add_user.html.twig', [
