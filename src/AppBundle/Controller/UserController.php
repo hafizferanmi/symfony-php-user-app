@@ -33,7 +33,7 @@ class UserController extends Controller {
 	   	$form = $this->createFormBuilder($user)
 	        ->add('email', EmailType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
 	        ->add('password', PasswordType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
-	        ->add('save', SubmitType::class, ['label' => 'Create User', 'attr' => ['class' => 'btn btn-primary'],])
+	        ->add('save', SubmitType::class, ['label' => 'Add User', 'attr' => ['class' => 'btn btn-sm btn-primary'],])
 	        ->getForm();
 
     	$form->handleRequest($request);
