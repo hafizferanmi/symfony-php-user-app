@@ -17,7 +17,7 @@
    <div>
    		<div id="simpleform" class="col-md-4 offset-md-4">
    			<h3 class="mb-2 text-center">Login</h3> 
-   			{% if error is not empty %}
+   			{% if error is defined %}
 	   			<div class="alert alert-danger">
 	   				{{ error }}
 	   			</div>

@@ -105,6 +105,16 @@ class UserController extends Controller {
 
 		    $repository = $this->getDoctrine()->getRepository(User::class);
 	   		$user = $repository->findOneBy(['email' => $email]);
+
+	   		if (empty($user)) {
+	   			return $this->render('login.html.twig', [
+	   				'form' => $form->createView(),
+			        'last_email' => $email,
+			        'error'         => 'Email/Password authentication failed',
+			    ]);
+	   		}
+
+	   		
 	   		$password_match = password_verify($password, $user->getPassword());
 
 	   		if ($password_match) {
@@ -125,7 +135,6 @@ class UserController extends Controller {
 
 	    return $this->render('login.html.twig', [
 	    	'form' => $form->createView(),
-	    	'error' => ''
 	    ]);
 	}
 
