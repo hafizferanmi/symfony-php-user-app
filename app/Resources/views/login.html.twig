@@ -1,4 +1,6 @@
-{% extends 'base.html.twig' %} 
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
 
 {% block stylesheets %}
 	<style type="text/css">
@@ -14,7 +16,13 @@
   
    <div>
    		<div id="simpleform" class="col-md-4 offset-md-4">
-   			<h3 class="mb-2 text-center">Enter User details</h3> 
+   			<h3 class="mb-2 text-center">Login</h3> 
+   			{% if error is not empty %}
+	   			<div class="alert alert-danger">
+	   				{{ error }}
+	   			</div>
+   			{% endif %} 
+   			
 			{{ form_start(form) }}
    			{{ form_widget(form) }}
 		    {{ form_end(form) }} 

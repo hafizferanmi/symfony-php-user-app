@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use AppBundle\Entity\User;
 
 class UserController extends Controller { 
@@ -29,7 +30,6 @@ class UserController extends Controller {
    public function addAction(Request $request) { 
 	   	$user = new User();
 
-
 	   	$form = $this->createFormBuilder($user)
 	        ->add('email', EmailType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
 	        ->add('password', PasswordType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
@@ -41,6 +41,8 @@ class UserController extends Controller {
 	    if ($form->isSubmitted() && $form->isValid()) {
 	        
 	        $user = $form->getData();
+	        $password = password_hash($user->getPassword(), PASSWORD_BCRYPT);
+            $user->setPassword($password);
 
 	        $entityManager = $this->getDoctrine()->getManager();
 	        $entityManager->persist($user);
@@ -74,6 +76,57 @@ class UserController extends Controller {
         ));
 
 	    
+	}
+
+	    /** 
+      * @Route("/login", name="login") 
+   */ 
+   public function loginAction(Request $request) {
+   		$user = new User();
+	    // $error = $authenticationUtils->getLastAuthenticationError();
+	    // $lastUsername = $authenticationUtils->getLastUsername();
+
+	    $form = $this->createFormBuilder($user)
+	        ->add('email', EmailType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
+	        ->add('password', PasswordType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
+	        ->add('save', SubmitType::class, ['label' => 'Login', 'attr' => ['class' => 'btn btn-sm btn-primary'],])
+	        ->getForm();
+
+	    $form->handleRequest($request);
+
+	    if ($form->isSubmitted() ) {
+	    	// && $form->isValid()
+		    $data = $form->getData();
+
+		    // var_dump($data);
+		    $email = $data->getEmail();
+		    $password = $data->getPassword();
+
+
+		    $repository = $this->getDoctrine()->getRepository(User::class);
+	   		$user = $repository->findOneBy(['email' => $email]);
+	   		$password_match = password_verify($password, $user->getPassword());
+
+	   		if ($password_match) {
+	   			 return $this->redirect('/user/' . $user->getId());
+
+	   		}else{
+	   			return $this->render('login.html.twig', [
+	   				'form' => $form->createView(),
+			        'last_email' => $email,
+			        'error'         => 'Email/Password authentication failed',
+			    ]);
+	   		}
+
+		}
+            
+
+
+
+	    return $this->render('login.html.twig', [
+	    	'form' => $form->createView(),
+	    	'error' => ''
+	    ]);
 	}
 
 	/** 
