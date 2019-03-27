@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %} 
 
-{% block title %}Add user!{% endblock %}
+{% block title %}Join us!{% endblock %}
 
 {% block stylesheets %}
 	<style type="text/css">
@@ -16,7 +16,12 @@
   
    <div>
    		<div id="simpleform" class="col-md-4 offset-md-4">
-   			<h3 class="mb-2 text-center">Enter User details</h3> 
+   			<h3 class="mb-2 text-center">Fill form to join</h3> 
+   			{% if msg is defined %}
+	   			<div class="alert alert-success">
+	   				{{ msg }}
+	   			</div>
+   			{% endif %} 
 			{{ form_start(form) }}
    			{{ form_widget(form) }}
 		    {{ form_end(form) }} 

@@ -5,12 +5,27 @@
 {% block body %} 
 <div class="jumbotron">
 	<div class="container">
-		  <h1 class="display-4">Welcome, Guest!</h1>
+		  {% if not app.session.get('email') %}
+			  <h1 class="display-4">Welcome, Guest!</h1>
+		  {% endif %}
+
+		  {% if app.session.get('email') %}
+			  <h1 class="display-4">Welcome, {{ app.session.get('email') }}!</h1>
+		  {% endif %}
+		  
 		  <p class="lead">Welcome to our new web application.</p>
 		  <hr class="my-4">
 		  <p>What would you like to do today.</p>
-		  <a class="btn btn-primary btn-sm" href="/login" role="button">Login</a>
-		  <a class="btn btn-primary btn-sm" href="user/add" role="button">Join us</a>
+
+		  {% if not app.session.get('email') %}
+			  <a class="btn btn-primary btn-sm" href="/login" role="button">Login</a>
+			  <a class="btn btn-primary btn-sm" href="user/add" role="button">Join us</a>
+		  {% endif %}
+
+		  {% if app.session.get('email') %}
+		      <a class="btn btn-primary btn-sm" href="/user/{{ app.session.get('id') }}" role="button">Go to profile</a>
+			  <a class="btn btn-primary btn-sm" href="logout" role="button">Logout</a>
+		  {% endif %}
 	</div>
 
 </div>

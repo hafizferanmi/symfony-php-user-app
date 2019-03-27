@@ -3,8 +3,13 @@
   <h5 class="my-0 mr-md-auto font-weight-normal">Synf</h5>
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" href="/">Home</a>
-    <a class="p-2 text-dark" href="/user/add">Join</a>
-    <a class="p-2 text-dark" href="/login">Login</a>
+    {% if not app.session.get('email') %}
+      <a class="p-2 text-dark" href="/user/add">Join</a>
+      <a class="p-2 text-dark" href="/login">Login</a>
+    {% endif %}
+    {% if app.session.get('email') %}
+      <a class="p-2 text-dark" href="/logout">Logout</a>
+    {% endif %}
   </nav>
 {# </div> #}
 </div>

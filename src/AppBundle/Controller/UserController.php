@@ -47,9 +47,12 @@ class UserController extends Controller {
 
 	        $entityManager = $this->getDoctrine()->getManager();
 	        $entityManager->persist($user);
-	        $entityManager->flush();
+			$entityManager->flush();
 
-	        return $this->redirect('/user/' . $user->getId());
+	        return $this->render('add_user.html.twig', [
+   				'form' => $form->createView(),
+		        'msg'         => 'Thanks for joining, you can now login',
+		    ]);
 	    }
 
 	    return $this->render('add_user.html.twig', [
@@ -62,11 +65,10 @@ class UserController extends Controller {
       * @Route("/user/{userId}", name="user_desc") 
     */ 
 	public function showAction($userId){
-		// $session = new Session();
-		// $session->start();
-		// if ( $session->get('email') == null ) {
-		// 	return $this->redirect('/');
-		// }
+		$session = new Session();
+		if ( $session->get('email') == null ) {
+			return $this->redirect('/');
+		}
 
 	    $user = $this->getDoctrine()
 	        ->getRepository(User::class)
@@ -122,9 +124,9 @@ class UserController extends Controller {
 	   		$password_match = password_verify($password, $user->getPassword());
 
 	   		if ($password_match) {
-	   // 			$session = new Session();
-				// $session->start();
-				// $session->set('email', $email);
+	   			$session = new Session();
+				$session->set('email', $email);
+				$session->set('id', $user->getId());
 	   			return $this->redirect('/user/' . $user->getId());
 
 	   		}else{
@@ -145,9 +147,11 @@ class UserController extends Controller {
 	}
 
 	/** 
-      * @Route("/success", name="success") 
+      * @Route("/logout", name="logout") 
     */ 
-	public function success(){
-		return $this->render('task_success.html.twig');
+	public function logout(){
+		$session = new Session();
+		$session->clear();
+		return $this->render('home.html.twig');
 	}
 }
