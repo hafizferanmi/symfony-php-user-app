@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %} 
 
-{% block title %}Welcom {{ user.email }}!{% endblock %}
+{% block title %}Welcome {{ user.email }}!{% endblock %}
 
 {% block stylesheets %}
 	<style type="text/css">
@@ -16,10 +16,10 @@
   
 <div >
 	<div id="simplediv" class="col-md-6 offset-md-3">
-	 <h3 class="mb-2">Welcom!!</h3>
+	 {# <h3 class="mb-2">Welcome!!</h3> #}
 	 <div class="mb-2">
-	 	<div><b>Email Address: </b></div>
-	 	<div> {{ user.email }} </div>
+	 	<div><b>Welcome, {{ user.email }}</b></div>
+	 	<div>  </div>
 	 </div>
 
 	 

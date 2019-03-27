@@ -10,16 +10,17 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\User;
 
 class UserController extends Controller { 
    /** 
-      * @Route("/", name="users") 
+      * @Route("/", name="welcome") 
    */ 
    public function usersAction(Request $request) {
    		$repository = $this->getDoctrine()->getRepository(User::class);
    		$users = $repository->findAll();
-   		return $this->render('all_user.html.twig', [
+   		return $this->render('home.html.twig', [
 	        'users' => $users,
 	    ]);
    } 
@@ -61,6 +62,11 @@ class UserController extends Controller {
       * @Route("/user/{userId}", name="user_desc") 
     */ 
 	public function showAction($userId){
+		// $session = new Session();
+		// $session->start();
+		// if ( $session->get('email') == null ) {
+		// 	return $this->redirect('/');
+		// }
 
 	    $user = $this->getDoctrine()
 	        ->getRepository(User::class)
@@ -82,10 +88,8 @@ class UserController extends Controller {
       * @Route("/login", name="login") 
    */ 
    public function loginAction(Request $request) {
-   		$user = new User();
-	    // $error = $authenticationUtils->getLastAuthenticationError();
-	    // $lastUsername = $authenticationUtils->getLastUsername();
 
+   		$user = new User();
 	    $form = $this->createFormBuilder($user)
 	        ->add('email', EmailType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
 	        ->add('password', PasswordType::class, ['required' => true, 'attr' => ['class' => 'form-control mb-2']])
@@ -114,11 +118,14 @@ class UserController extends Controller {
 			    ]);
 	   		}
 
-	   		
+
 	   		$password_match = password_verify($password, $user->getPassword());
 
 	   		if ($password_match) {
-	   			 return $this->redirect('/user/' . $user->getId());
+	   // 			$session = new Session();
+				// $session->start();
+				// $session->set('email', $email);
+	   			return $this->redirect('/user/' . $user->getId());
 
 	   		}else{
 	   			return $this->render('login.html.twig', [
@@ -130,7 +137,6 @@ class UserController extends Controller {
 
 		}
             
-
 
 
 	    return $this->render('login.html.twig', [
